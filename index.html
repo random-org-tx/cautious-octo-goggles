@@ -1,289 +1,249 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Stock Research (Offline + Auto Dataset)</title>
+<title>AI Stock Research</title>
 
 <style>
-*{box-sizing:border-box}
-
-body{
-  margin:0;
-  background:#fafaf7;
-  color:#1a1a1a;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif;
-}
-
-.container{
-  max-width:1100px;
-  margin:0 auto;
-  padding:24px 20px 60px;
-}
-
-.header h1{margin:0;font-size:26px}
-.header p{color:#666;font-size:14px}
-
-.panel{
-  background:white;
-  border:1px solid rgba(0,0,0,0.08);
-  border-radius:14px;
-  padding:20px;
-  margin-bottom:16px;
-}
-
-.controls{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:12px;
-}
-
-.control label{font-size:12px;color:#666}
-.control select{
-  width:100%;
-  padding:10px;
-  border-radius:8px;
-  border:1px solid rgba(0,0,0,0.15);
-}
-
-button{
-  border:none;
-  border-radius:8px;
-  padding:10px 16px;
-  cursor:pointer;
-  font-weight:600;
-}
-
-.primary{background:#111;color:#fff}
-
-.status{font-size:13px;color:#666;margin-left:10px}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-  gap:12px;
-}
-
-.card{
-  border:1px solid rgba(0,0,0,0.08);
-  border-radius:12px;
-  padding:14px;
-  background:white;
-}
-
-.ticker{font-size:18px;font-weight:700}
-.company{font-size:13px;color:#666}
-
-.badge{
-  display:inline-block;
-  padding:4px 8px;
-  background:#f2f2f0;
-  border-radius:999px;
-  font-size:11px;
-  margin-top:6px;
-}
-
-.metric{
-  display:flex;
-  justify-content:space-between;
-  font-size:13px;
-  padding:4px 0;
-}
-
-.rationale{
-  margin-top:10px;
-  font-size:13px;
-  line-height:1.5;
-  color:#444;
-}
+body { margin:0; font-family: Inter, system-ui; background:#fafaf7; color:#111; }
+.container { max-width:1100px; margin:auto; padding:20px; }
+.panel { background:#fff; border:1px solid #e6e6e6; border-radius:12px; padding:18px; margin-bottom:14px; }
+.controls { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:10px; }
+input, select { width:100%; padding:10px; border:1px solid #ddd; border-radius:8px; }
+button { padding:10px 14px; border-radius:8px; border:0; cursor:pointer; }
+.primary { background:#111; color:#fff; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:10px; }
+.card { border:1px solid #eee; border-radius:12px; padding:12px; background:#fff; }
+.small { font-size:12px; color:#666; }
+.status { font-size:13px; margin-left:10px; }
+.error { color:#b42318; }
+.success { color:#067647; }
+.spinner { width:12px;height:12px;border:2px solid #ddd;border-top-color:#111;border-radius:50%;display:inline-block;animation:spin 0.8s linear infinite; }
+@keyframes spin { to { transform:rotate(360deg); } }
 </style>
 </head>
 
 <body>
-
 <div class="container">
 
-  <div class="header">
-    <h1>Stock Research (Auto-Updating)</h1>
-    <p>GitHub Actions dataset + offline scoring engine</p>
+<div class="panel">
+  <h2>Stock Research (Gemini Fixed)</h2>
+
+  <input id="apiKey" placeholder="Gemini API key"/>
+
+  <div class="controls">
+    <select id="style">
+      <option value="balanced">Balanced</option>
+      <option value="growth">Growth</option>
+      <option value="value">Value</option>
+    </select>
+
+    <select id="risk">
+      <option value="moderate">Moderate</option>
+      <option value="aggressive">Aggressive</option>
+      <option value="conservative">Conservative</option>
+    </select>
+
+    <select id="geo">
+      <option value="us">US</option>
+      <option value="global">Global</option>
+    </select>
   </div>
 
-  <div class="panel">
+  <button class="primary" onclick="generate()">Generate</button>
+  <span id="status" class="status"></span>
+</div>
 
-    <div class="controls">
-
-      <div class="control">
-        <label>Style</label>
-        <select id="style">
-          <option value="balanced">Balanced</option>
-          <option value="value">Value</option>
-          <option value="growth">Growth</option>
-        </select>
-      </div>
-
-      <div class="control">
-        <label>Risk</label>
-        <select id="risk">
-          <option value="moderate">Moderate</option>
-          <option value="conservative">Conservative</option>
-          <option value="aggressive">Aggressive</option>
-        </select>
-      </div>
-
-    </div>
-
-    <div style="margin-top:12px;">
-      <button class="primary" onclick="generateStocks()">
-        Generate 10 Picks
-      </button>
-      <span class="status" id="status"></span>
-    </div>
-
-  </div>
-
-  <div id="results"></div>
+<div id="results"></div>
 
 </div>
 
 <script>
 
-/* -----------------------------
-   1. LIVE DATA LOADER
-------------------------------*/
+const $ = (id) => document.getElementById(id);
 
-let STOCKS = [];
+function esc(s){
+  return String(s ?? '').replace(/[&<>"']/g, c => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[c]));
+}
 
-async function loadData() {
-  try {
-    const res = await fetch("./data/stocks.json?v=" + Date.now());
+function getKey(){
+  return localStorage.getItem("gemini_key") || "";
+}
 
-    if (!res.ok) {
-      throw new Error("Dataset not found. Run GitHub Action first.");
+$("#apiKey").value = getKey();
+
+$("#apiKey").addEventListener("change", e=>{
+  localStorage.setItem("gemini_key", e.target.value);
+});
+
+async function fetchWithRetry(url, options, retries=3){
+
+  while(retries-- > 0){
+    const r = await fetch(url, options);
+
+    if(r.status === 429){
+      await new Promise(res=>setTimeout(res, 3000));
+      continue;
     }
 
-    STOCKS = await res.json();
+    if(!r.ok){
+      throw new Error(await r.text());
+    }
 
-  } catch (e) {
-    document.getElementById("status").textContent =
-      "Failed to load dataset";
-    console.error(e);
+    return r;
   }
+
+  throw new Error("Too many retries (429)");
 }
 
-/* -----------------------------
-   2. LOCAL SCORING ENGINE
-------------------------------*/
+function extractJSON(text){
+  try {
+    return JSON.parse(text);
+  } catch {}
 
-function score(stock, prefs){
+  const start = text.indexOf("{");
+  const end = text.lastIndexOf("}");
 
-  let s = 0;
-  const pe = stock.pe || 1000;
-
-  if(prefs.style === "value"){
-    s += (1 / pe) * 100;
+  if(start >= 0 && end > start){
+    return JSON.parse(text.slice(start, end+1));
   }
 
-  if(prefs.style === "growth"){
-    s += (stock.mcap || 1) / 100;
-  }
-
-  if(prefs.style === "balanced"){
-    s += (1 / pe) * 50 + (stock.mcap || 1) / 200;
-  }
-
-  if(prefs.risk === "conservative"){
-    s += (stock.mcap || 1) > 2000 ? 20 : 5;
-  }
-
-  return s;
+  throw new Error("Invalid JSON response");
 }
 
-/* -----------------------------
-   3. RANKING
-------------------------------*/
+async function gemini(system, user){
 
-function rankStocks(prefs){
+  const key = getKey();
+  if(!key) throw new Error("Missing API key");
 
-  return STOCKS
-    .map(s => ({
-      ...s,
-      score: score(s, prefs)
-    }))
-    .sort((a,b)=>b.score-a.score)
-    .slice(0,10);
-}
+  const useSearch = false; // IMPORTANT: keep OFF to avoid tool conflicts
 
-/* -----------------------------
-   4. RENDER UI
-------------------------------*/
-
-function render(stocks){
-
-  document.getElementById("results").innerHTML = `
-    <div class="panel">
-      <h2>Top 10 Picks</h2>
-
-      <div class="grid">
-        ${stocks.map(s=>`
-          <div class="card">
-            <div class="ticker">${s.ticker}</div>
-            <div class="company">${s.company || ""}</div>
-
-            <div class="badge">${s.sector || "Unknown"}</div>
-
-            <div class="metric">
-              <span>Price</span><span>${s.price || "N/A"}</span>
-            </div>
-
-            <div class="metric">
-              <span>P/E</span><span>${s.pe || "N/A"}</span>
-            </div>
-
-            <div class="metric">
-              <span>Market Cap</span><span>${s.mcap || "N/A"}</span>
-            </div>
-
-            <div class="rationale">
-              Score: ${s.score.toFixed(2)} — ranked using local deterministic model.
-            </div>
-          </div>
-        `).join("")}
-      </div>
-    </div>
-  `;
-}
-
-/* -----------------------------
-   5. MAIN ENTRY
-------------------------------*/
-
-async function generateStocks(){
-
-  document.getElementById("status").textContent =
-    "Loading dataset...";
-
-  await loadData();
-
-  if(!STOCKS.length){
-    document.getElementById("status").textContent =
-      "No dataset available";
-    return;
-  }
-
-  const prefs = {
-    style: document.getElementById("style").value,
-    risk: document.getElementById("risk").value
+  const body = {
+    system_instruction: {
+      parts: [{ text: system }]
+    },
+    contents: [{
+      role:"user",
+      parts:[{ text: user }]
+    }],
+    generationConfig: {
+      temperature: 0.4,
+      maxOutputTokens: 2000
+    }
   };
 
-  const ranked = rankStocks(prefs);
+  // SAFE MODE:
+  // Do NOT combine google_search + structured JSON expectations
+  if(useSearch){
+    body.tools = [{ google_search: {} }];
+  }
 
-  render(ranked);
+  const r = await fetchWithRetry(
+    "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" + encodeURIComponent(key),
+    {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify(body)
+    }
+  );
 
-  document.getElementById("status").textContent =
-    "Loaded from GitHub Actions dataset";
+  const data = await r.json();
+
+  const text =
+    data.candidates?.[0]?.content?.parts
+      ?.map(p=>p.text||"")
+      .join("") || "";
+
+  return extractJSON(text);
+}
+
+async function generate(){
+
+  const status = $("status");
+  const btn = document.querySelector("button");
+
+  btn.disabled = true;
+  status.innerHTML = `<span class="spinner"></span> generating...`;
+
+  try{
+
+    const prefs = {
+      style: $("style").value,
+      risk: $("risk").value,
+      geo: $("geo").value
+    };
+
+    const system = `
+You are a financial research assistant.
+
+Return ONLY valid JSON:
+
+{
+ "marketSummary":"string",
+ "picks":[
+  {
+    "ticker":"string",
+    "company":"string",
+    "sector":"string",
+    "marketCap":"string",
+    "peRatio":"string",
+    "currentPrice":"string",
+    "rationale":"string",
+    "risks":"string",
+    "category":"growth|value|defensive|dividend"
+  }
+ ]
+}
+
+Rules:
+- exactly 10 picks
+- no markdown
+- no extra keys
+`;
+
+    const user = `
+Generate 10 stock research candidates.
+
+Style: ${prefs.style}
+Risk: ${prefs.risk}
+Geo: ${prefs.geo}
+`;
+
+    const res = await gemini(system, user);
+
+    if(!res.picks) throw new Error("Bad response schema");
+
+    $("results").innerHTML = `
+      <div class="panel">
+        <h3>Market Summary</h3>
+        <p class="small">${esc(res.marketSummary)}</p>
+
+        <div class="grid">
+          ${res.picks.map(p=>`
+            <div class="card">
+              <b>${esc(p.ticker)}</b> — ${esc(p.company)}
+              <div class="small">${esc(p.sector)}</div>
+              <p>${esc(p.rationale)}</p>
+              <div class="small">Risk: ${esc(p.risks)}</div>
+            </div>
+          `).join("")}
+        </div>
+      </div>
+    `;
+
+    status.innerHTML = `<span class="success">done</span>`;
+
+  }catch(e){
+    console.error(e);
+    status.innerHTML = `<span class="error">${esc(e.message)}</span>`;
+  }
+
+  btn.disabled = false;
 }
 
 </script>
-
 </body>
 </html>
