@@ -1,0 +1,44 @@
+[
+  {
+    "ticker": "AAPL",
+    "company": "Apple Inc",
+    "sector": "Technology",
+    "basePrice": 180
+  },
+  {
+    "ticker": "MSFT",
+    "company": "Microsoft",
+    "sector": "Technology",
+    "basePrice": 420
+  },
+  {
+    "ticker": "GOOGL",
+    "company": "Alphabet",
+    "sector": "Technology",
+    "basePrice": 140
+  },
+  {
+    "ticker": "AMZN",
+    "company": "Amazon",
+    "sector": "Consumer",
+    "basePrice": 170
+  },
+  {
+    "ticker": "NVDA",
+    "company": "NVIDIA",
+    "sector": "AI",
+    "basePrice": 900
+  },
+  {
+    "ticker": "META",
+    "company": "Meta",
+    "sector": "Social",
+    "basePrice": 480
+  },
+  {
+    "ticker": "TSLA",
+    "company": "Tesla",
+    "sector": "Auto",
+    "basePrice": 220
+  }
+]
