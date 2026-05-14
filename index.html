@@ -1,432 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
 <title>AI Stock Research</title>
 
 <style>
-
-*{
-  box-sizing:border-box;
-}
-
-body{
-  margin:0;
-  background:#fafaf7;
-  color:#1a1a1a;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif;
-}
-
-.container{
-  max-width:1100px;
-  margin:0 auto;
-  padding:24px 20px 60px;
-}
-
-.header{
-  margin-bottom:20px;
-}
-
-.header h1{
-  margin:0 0 4px;
-  font-size:26px;
-  font-weight:600;
-}
-
-.header p{
-  margin:0;
-  color:#666;
-  font-size:14px;
-}
-
-.panel{
-  background:white;
-  border:1px solid rgba(0,0,0,0.08);
-  border-radius:14px;
-  padding:20px;
-  margin-bottom:16px;
-}
-
-.panel h2{
-  margin:0 0 16px;
-  font-size:18px;
-}
-
-.disclaimer{
-  background:#fff5e8;
-  border:1px solid rgba(180,120,20,0.15);
-  color:#7a4f00;
-  padding:12px 14px;
-  border-radius:10px;
-  margin-bottom:18px;
-  font-size:13px;
-  line-height:1.6;
-}
-
-.controls{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:12px;
-  margin-bottom:14px;
-}
-
-.control label{
-  display:block;
-  margin-bottom:5px;
-  font-size:12px;
-  color:#666;
-}
-
-.control input,
-.control select{
-  width:100%;
-  padding:10px;
-  border-radius:8px;
-  border:1px solid rgba(0,0,0,0.15);
-  font-size:14px;
-  background:white;
-}
-
-.control input:focus,
-.control select:focus{
-  outline:none;
-  border-color:#111;
-  box-shadow:0 0 0 3px rgba(0,0,0,0.05);
-}
-
-.api-row{
-  display:flex;
-  gap:10px;
-  margin-bottom:14px;
-}
-
-.api-row input{
-  flex:1;
-}
-
-button{
-  border:none;
-  border-radius:8px;
-  padding:10px 16px;
-  cursor:pointer;
-  font-size:14px;
-  font-weight:600;
-}
-
-button.primary{
-  background:#111;
-  color:white;
-}
-
-button.secondary{
-  background:#f1efe8;
-  color:#111;
-}
-
-button:hover{
-  opacity:0.92;
-}
-
-button:disabled{
-  opacity:0.5;
-  cursor:not-allowed;
-}
-
-.toolbar{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  flex-wrap:wrap;
-}
-
-.status{
-  font-size:13px;
-  color:#666;
-}
-
-.success{
-  color:#027a48;
-}
-
-.error{
-  color:#b42318;
-}
-
-.small{
-  font-size:12px;
-  color:#777;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-  gap:12px;
-}
-
-.card{
-  border:1px solid rgba(0,0,0,0.08);
-  border-radius:12px;
-  padding:14px;
-  background:white;
-}
-
-.card-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  margin-bottom:10px;
-}
-
-.ticker{
-  font-size:18px;
-  font-weight:700;
-}
-
-.company{
-  font-size:13px;
-  color:#666;
-}
-
-.rank{
-  font-size:12px;
-  color:#999;
-}
-
-.badges{
-  display:flex;
-  gap:6px;
-  flex-wrap:wrap;
-  margin-bottom:10px;
-}
-
-.badge{
-  padding:4px 8px;
-  border-radius:999px;
-  background:#f2f2f0;
-  font-size:11px;
-}
-
-.metrics{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
-  margin-bottom:10px;
-}
-
-.metric{
-  background:#fafaf7;
-  border-radius:8px;
-  padding:8px;
-}
-
-.metric-label{
-  font-size:11px;
-  color:#888;
-}
-
-.metric-value{
-  font-size:13px;
-  font-weight:600;
-  margin-top:2px;
-}
-
-.rationale{
-  font-size:13px;
-  line-height:1.6;
-  margin-bottom:8px;
-}
-
-.risk{
-  font-size:12px;
-  color:#666;
-  border-top:1px solid rgba(0,0,0,0.05);
-  padding-top:8px;
-}
-
-.actions{
-  margin-top:12px;
-  display:flex;
-  gap:8px;
-}
-
-.market-summary{
-  background:#f6f4ef;
-  padding:14px;
-  border-radius:10px;
-  margin-bottom:14px;
-  font-size:13px;
-  line-height:1.7;
-}
-
-.spinner{
-  width:12px;
-  height:12px;
-  border:2px solid #ddd;
-  border-top-color:#111;
-  border-radius:50%;
-  display:inline-block;
-  animation:spin .8s linear infinite;
-  margin-right:6px;
-}
-
-@keyframes spin{
-  to{
-    transform:rotate(360deg);
-  }
-}
-
-.history-item{
-  padding:10px 0;
-  border-bottom:1px solid rgba(0,0,0,0.06);
-  cursor:pointer;
-  font-size:13px;
-}
-
-.history-item:hover{
-  background:#fafaf7;
-}
-
-.empty{
-  color:#888;
-  font-size:13px;
-}
-
+body { margin:0; font-family: Inter, system-ui; background:#fafaf7; color:#111; }
+.container { max-width:1100px; margin:auto; padding:20px; }
+.panel { background:#fff; border:1px solid #e6e6e6; border-radius:12px; padding:18px; margin-bottom:14px; }
+.controls { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:10px; }
+input, select { width:100%; padding:10px; border:1px solid #ddd; border-radius:8px; }
+button { padding:10px 14px; border-radius:8px; border:0; cursor:pointer; }
+.primary { background:#111; color:#fff; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:10px; }
+.card { border:1px solid #eee; border-radius:12px; padding:12px; background:#fff; }
+.small { font-size:12px; color:#666; }
+.status { font-size:13px; margin-left:10px; }
+.error { color:#b42318; }
+.success { color:#067647; }
+.spinner { width:12px;height:12px;border:2px solid #ddd;border-top-color:#111;border-radius:50%;display:inline-block;animation:spin 0.8s linear infinite; }
+@keyframes spin { to { transform:rotate(360deg); } }
 </style>
 </head>
 
 <body>
-
 <div class="container">
 
-  <div class="header">
-    <h1>Long-term stock research</h1>
-    <p>Powered by Gemini + optional Google Search grounding</p>
+<div class="panel">
+  <h2>Stock Research (Gemini Fixed)</h2>
+
+  <input id="apiKey" placeholder="Gemini API key"/>
+
+  <div class="controls">
+    <select id="style">
+      <option value="balanced">Balanced</option>
+      <option value="growth">Growth</option>
+      <option value="value">Value</option>
+    </select>
+
+    <select id="risk">
+      <option value="moderate">Moderate</option>
+      <option value="aggressive">Aggressive</option>
+      <option value="conservative">Conservative</option>
+    </select>
+
+    <select id="geo">
+      <option value="us">US</option>
+      <option value="global">Global</option>
+    </select>
   </div>
 
-  <div class="disclaimer">
-    <strong>Not investment advice.</strong>
-    Research candidates only. Verify independently before investing.
-  </div>
+  <button class="primary" onclick="generate()">Generate</button>
+  <span id="status" class="status"></span>
+</div>
 
-  <div class="panel">
-
-    <h2>Preferences</h2>
-
-    <div class="api-row">
-
-      <input
-        type="password"
-        id="api-key"
-        placeholder="Gemini API key from Google AI Studio"
-      />
-
-      <button class="secondary" id="save-key">
-        Save key
-      </button>
-
-    </div>
-
-    <div class="small" id="api-status"></div>
-
-    <div class="controls">
-
-      <div class="control">
-        <label>Investment style</label>
-
-        <select id="style">
-          <option value="balanced">Balanced</option>
-          <option value="value">Value</option>
-          <option value="growth">Growth</option>
-          <option value="dividend">Dividend</option>
-          <option value="defensive">Defensive</option>
-        </select>
-      </div>
-
-      <div class="control">
-        <label>Risk tolerance</label>
-
-        <select id="risk">
-          <option value="moderate">Moderate</option>
-          <option value="conservative">Conservative</option>
-          <option value="aggressive">Aggressive</option>
-        </select>
-      </div>
-
-      <div class="control">
-        <label>Market cap</label>
-
-        <select id="cap">
-          <option value="mixed">Mixed</option>
-          <option value="large">Large cap</option>
-          <option value="mid">Mid cap</option>
-          <option value="any">Any</option>
-        </select>
-      </div>
-
-      <div class="control">
-        <label>Geography</label>
-
-        <select id="geo">
-          <option value="us">US</option>
-          <option value="global">Global</option>
-        </select>
-      </div>
-
-    </div>
-
-    <div class="control" style="margin-bottom:14px;">
-      <label>Sector preferences</label>
-
-      <input
-        id="sectors"
-        placeholder="e.g. emphasize healthcare, avoid crypto"
-      />
-    </div>
-
-    <label style="display:flex; gap:8px; align-items:center; margin-bottom:16px; font-size:13px;">
-      <input type="checkbox" id="web-search" checked />
-      Use live Google Search grounding (better quality, higher quota usage)
-    </label>
-
-    <div class="toolbar">
-
-      <button class="primary" id="generate">
-        Generate 10 picks
-      </button>
-
-      <div class="status" id="status"></div>
-
-    </div>
-
-  </div>
-
-  <div id="results"></div>
-
-  <div class="panel">
-
-    <h2>Watchlist</h2>
-
-    <div id="watchlist">
-      <div class="empty">
-        No saved stocks yet.
-      </div>
-    </div>
-
-  </div>
-
-  <div class="panel">
-
-    <h2>Recent generations</h2>
-
-    <div id="history">
-      <div class="empty">
-        No generations yet.
-      </div>
-    </div>
-
-  </div>
+<div id="results"></div>
 
 </div>
 
@@ -434,602 +63,187 @@ button:disabled{
 
 const $ = (id) => document.getElementById(id);
 
-const STORAGE = {
-  API_KEY: 'gemini-api-key',
-  PREFS: 'stock-prefs',
-  WATCHLIST: 'stock-watchlist',
-  HISTORY: 'stock-history'
-};
-
 function esc(s){
-  return String(s ?? '')
-    .replace(/[&<>"']/g,m=>({
-      '&':'&amp;',
-      '<':'&lt;',
-      '>':'&gt;',
-      '"':'&quot;',
-      "'":'&#39;'
-    }[m]));
+  return String(s ?? '').replace(/[&<>"']/g, c => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[c]));
 }
 
-async function safeGet(key){
-  try{
-    const raw = localStorage.getItem(key);
-    return raw ? JSON.parse(raw) : null;
-  }catch{
-    return null;
+function getKey(){
+  return localStorage.getItem("gemini_key") || "";
+}
+
+$("#apiKey").value = getKey();
+
+$("#apiKey").addEventListener("change", e=>{
+  localStorage.setItem("gemini_key", e.target.value);
+});
+
+async function fetchWithRetry(url, options, retries=3){
+
+  while(retries-- > 0){
+    const r = await fetch(url, options);
+
+    if(r.status === 429){
+      await new Promise(res=>setTimeout(res, 3000));
+      continue;
+    }
+
+    if(!r.ok){
+      throw new Error(await r.text());
+    }
+
+    return r;
   }
+
+  throw new Error("Too many retries (429)");
 }
 
-async function safeSet(key,val){
-  localStorage.setItem(key,JSON.stringify(val));
-}
+function extractJSON(text){
+  try {
+    return JSON.parse(text);
+  } catch {}
 
-function getApiKey(){
-  return localStorage.getItem(STORAGE.API_KEY) || '';
-}
+  const start = text.indexOf("{");
+  const end = text.lastIndexOf("}");
 
-async function validateApiKey(key){
-
-  try{
-
-    const r = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models?key=${encodeURIComponent(key)}`
-    );
-
-    return r.ok;
-
-  }catch{
-
-    return false;
+  if(start >= 0 && end > start){
+    return JSON.parse(text.slice(start, end+1));
   }
+
+  throw new Error("Invalid JSON response");
 }
 
-async function fetchWithTimeout(url,options,timeout=90000){
+async function gemini(system, user){
 
-  const controller = new AbortController();
+  const key = getKey();
+  if(!key) throw new Error("Missing API key");
 
-  const timer = setTimeout(()=>{
-    controller.abort();
-  },timeout);
-
-  try{
-
-    return await fetch(url,{
-      ...options,
-      signal:controller.signal
-    });
-
-  }finally{
-
-    clearTimeout(timer);
-  }
-}
-
-async function callGemini(systemPrompt,userPrompt,maxTokens=2500){
-
-  const useSearch = $('web-search').checked;
+  const useSearch = false; // IMPORTANT: keep OFF to avoid tool conflicts
 
   const body = {
-
-    system_instruction:{
-      parts:[{
-        text:systemPrompt
-      }]
+    system_instruction: {
+      parts: [{ text: system }]
     },
-
-    contents:[{
-      role:'user',
-      parts:[{
-        text:userPrompt
-      }]
+    contents: [{
+      role:"user",
+      parts:[{ text: user }]
     }],
-
-    generationConfig:{
-      responseMimeType:'application/json',
-      temperature:0.4,
-      maxOutputTokens:maxTokens
+    generationConfig: {
+      temperature: 0.4,
+      maxOutputTokens: 2000
     }
   };
 
+  // SAFE MODE:
+  // Do NOT combine google_search + structured JSON expectations
   if(useSearch){
-    body.tools = [{
-      google_search:{}
-    }];
+    body.tools = [{ google_search: {} }];
   }
 
-  let retries = 3;
-
-  while(retries > 0){
-
-    try{
-
-      const response = await fetchWithTimeout(
-
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${encodeURIComponent(getApiKey())}`,
-
-        {
-          method:'POST',
-
-          headers:{
-            'Content-Type':'application/json'
-          },
-
-          body:JSON.stringify(body)
-        },
-
-        90000
-      );
-
-      if(response.status === 429){
-
-        retries--;
-
-        if(retries <= 0){
-
-          throw new Error(
-            'Quota exceeded. Wait a few minutes or reduce Google Search usage.'
-          );
-        }
-
-        await new Promise(r=>setTimeout(r,5000));
-
-        continue;
-      }
-
-      if(!response.ok){
-
-        const err = await response.text();
-
-        throw new Error(err.slice(0,300));
-      }
-
-      const data = await response.json();
-
-      const text =
-        data.candidates?.[0]?.content?.parts
-          ?.map(p=>p.text || '')
-          .join('') || '';
-
-      return JSON.parse(text);
-
-    }catch(err){
-
-      retries--;
-
-      if(retries <= 0){
-        throw err;
-      }
-
-      await new Promise(r=>setTimeout(r,3000));
+  const r = await fetchWithRetry(
+    "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" + encodeURIComponent(key),
+    {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify(body)
     }
-  }
-}
-
-function validatePicks(data){
-
-  return (
-    data &&
-    Array.isArray(data.picks)
-  );
-}
-
-function dedupePicks(picks){
-
-  return picks.filter(
-    (p,i,arr)=>
-      arr.findIndex(x=>x.ticker===p.ticker)===i
-  );
-}
-
-function renderCard(stock,index){
-
-  return `
-    <div class="card">
-
-      <div class="card-top">
-
-        <div>
-          <div class="ticker">${esc(stock.ticker)}</div>
-          <div class="company">${esc(stock.company)}</div>
-        </div>
-
-        <div class="rank">#${index+1}</div>
-
-      </div>
-
-      <div class="badges">
-        <div class="badge">${esc(stock.sector || 'Unknown')}</div>
-        <div class="badge">${esc(stock.category || 'Research')}</div>
-      </div>
-
-      <div class="metrics">
-
-        <div class="metric">
-          <div class="metric-label">Price</div>
-          <div class="metric-value">${esc(stock.currentPrice || 'N/A')}</div>
-        </div>
-
-        <div class="metric">
-          <div class="metric-label">P/E</div>
-          <div class="metric-value">${esc(stock.peRatio || 'N/A')}</div>
-        </div>
-
-        <div class="metric">
-          <div class="metric-label">Market cap</div>
-          <div class="metric-value">${esc(stock.marketCap || 'N/A')}</div>
-        </div>
-
-      </div>
-
-      <div class="rationale">
-        ${esc(stock.rationale || '')}
-      </div>
-
-      <div class="risk">
-        <strong>Risk:</strong>
-        ${esc(stock.risks || 'N/A')}
-      </div>
-
-      <div class="actions">
-
-        <button
-          class="secondary"
-          onclick="saveStock('${esc(stock.ticker)}')"
-        >
-          Save
-        </button>
-
-      </div>
-
-    </div>
-  `;
-}
-
-function renderResults(data){
-
-  $('results').innerHTML = `
-    <div class="panel">
-
-      <h2>
-        Top ${data.picks.length} stock candidates
-      </h2>
-
-      <div class="market-summary">
-        ${esc(data.marketSummary || '')}
-      </div>
-
-      <div class="grid">
-        ${data.picks.map(renderCard).join('')}
-      </div>
-
-    </div>
-  `;
-
-  window.latestResults = data;
-}
-
-async function renderWatchlist(){
-
-  const list =
-    await safeGet(STORAGE.WATCHLIST) || [];
-
-  if(!list.length){
-
-    $('watchlist').innerHTML = `
-      <div class="empty">
-        No saved stocks yet.
-      </div>
-    `;
-
-    return;
-  }
-
-  $('watchlist').innerHTML = `
-    <div class="grid">
-      ${list.map(renderCard).join('')}
-    </div>
-  `;
-}
-
-async function renderHistory(){
-
-  const history =
-    await safeGet(STORAGE.HISTORY) || [];
-
-  if(!history.length){
-
-    $('history').innerHTML = `
-      <div class="empty">
-        No generations yet.
-      </div>
-    `;
-
-    return;
-  }
-
-  $('history').innerHTML = history.map((h,i)=>`
-
-    <div
-      class="history-item"
-      onclick="loadHistory(${i})"
-    >
-
-      ${new Date(h.generatedAt).toLocaleString()}
-
-    </div>
-
-  `).join('');
-}
-
-async function saveStock(ticker){
-
-  const results = window.latestResults;
-
-  if(!results) return;
-
-  const stock =
-    results.picks.find(x=>x.ticker===ticker);
-
-  if(!stock) return;
-
-  const watchlist =
-    await safeGet(STORAGE.WATCHLIST) || [];
-
-  if(watchlist.find(x=>x.ticker===ticker)){
-    return;
-  }
-
-  watchlist.unshift(stock);
-
-  await safeSet(STORAGE.WATCHLIST,watchlist);
-
-  renderWatchlist();
-}
-
-async function loadHistory(index){
-
-  const history =
-    await safeGet(STORAGE.HISTORY) || [];
-
-  const item = history[index];
-
-  if(item){
-
-    renderResults(item);
-
-    window.scrollTo({
-      top:0,
-      behavior:'smooth'
-    });
-  }
-}
-
-async function generateStocks(){
-
-  const btn = $('generate');
-
-  const status = $('status');
-
-  if(!getApiKey()){
-
-    status.innerHTML = `
-      <span class="error">
-        Enter API key first.
-      </span>
-    `;
-
-    return;
-  }
-
-  const today =
-    new Date().toISOString().slice(0,10);
-
-  const history =
-    await safeGet(STORAGE.HISTORY) || [];
-
-  const todays = history.find(
-    x=>x.generatedAt?.startsWith(today)
   );
 
-  if(todays){
+  const data = await r.json();
 
-    renderResults(todays);
+  const text =
+    data.candidates?.[0]?.content?.parts
+      ?.map(p=>p.text||"")
+      .join("") || "";
 
-    status.innerHTML = `
-      <span class="success">
-        Loaded cached results.
-      </span>
-    `;
+  return extractJSON(text);
+}
 
-    return;
-  }
+async function generate(){
+
+  const status = $("status");
+  const btn = document.querySelector("button");
 
   btn.disabled = true;
-
-  status.innerHTML = `
-    <span class="spinner"></span>
-    Analyzing markets...
-  `;
+  status.innerHTML = `<span class="spinner"></span> generating...`;
 
   try{
 
     const prefs = {
-
-      style:$('style').value,
-      risk:$('risk').value,
-      cap:$('cap').value,
-      geo:$('geo').value,
-      sectors:$('sectors').value
+      style: $("style").value,
+      risk: $("risk").value,
+      geo: $("geo").value
     };
 
-    await safeSet(STORAGE.PREFS,prefs);
-
-    const systemPrompt = `
+    const system = `
 You are a financial research assistant.
 
-Return ONLY valid JSON.
-
-Schema:
+Return ONLY valid JSON:
 
 {
-  "marketSummary":"2 concise sentences",
-  "picks":[
-    {
-      "ticker":"string",
-      "company":"string",
-      "sector":"string",
-      "marketCap":"string",
-      "peRatio":"string",
-      "currentPrice":"string",
-      "rationale":"1 concise sentence",
-      "risks":"1 concise sentence",
-      "category":"value | growth | dividend | defensive"
-    }
-  ]
+ "marketSummary":"string",
+ "picks":[
+  {
+    "ticker":"string",
+    "company":"string",
+    "sector":"string",
+    "marketCap":"string",
+    "peRatio":"string",
+    "currentPrice":"string",
+    "rationale":"string",
+    "risks":"string",
+    "category":"growth|value|defensive|dividend"
+  }
+ ]
 }
 
 Rules:
-- Exactly 10 picks
-- Maximum 3 picks per sector
-- Use current public information
-- Use N/A if uncertain
-- No hallucinated metrics
+- exactly 10 picks
+- no markdown
+- no extra keys
 `;
 
-    const userPrompt = `
-Generate 10 long-term stock research candidates.
+    const user = `
+Generate 10 stock research candidates.
 
-Investment style: ${prefs.style}
-Risk tolerance: ${prefs.risk}
-Market cap: ${prefs.cap}
-Geography: ${prefs.geo}
-Sector notes: ${prefs.sectors || 'None'}
-
-Today is ${today}.
+Style: ${prefs.style}
+Risk: ${prefs.risk}
+Geo: ${prefs.geo}
 `;
 
-    const result = await callGemini(
-      systemPrompt,
-      userPrompt
-    );
+    const res = await gemini(system, user);
 
-    if(!validatePicks(result)){
+    if(!res.picks) throw new Error("Bad response schema");
 
-      throw new Error(
-        'Invalid response schema'
-      );
-    }
+    $("results").innerHTML = `
+      <div class="panel">
+        <h3>Market Summary</h3>
+        <p class="small">${esc(res.marketSummary)}</p>
 
-    result.picks =
-      dedupePicks(result.picks);
-
-    result.generatedAt =
-      new Date().toISOString();
-
-    renderResults(result);
-
-    history.unshift(result);
-
-    await safeSet(
-      STORAGE.HISTORY,
-      history.slice(0,20)
-    );
-
-    renderHistory();
-
-    status.innerHTML = `
-      <span class="success">
-        Generated successfully.
-      </span>
+        <div class="grid">
+          ${res.picks.map(p=>`
+            <div class="card">
+              <b>${esc(p.ticker)}</b> — ${esc(p.company)}
+              <div class="small">${esc(p.sector)}</div>
+              <p>${esc(p.rationale)}</p>
+              <div class="small">Risk: ${esc(p.risks)}</div>
+            </div>
+          `).join("")}
+        </div>
+      </div>
     `;
 
-  }catch(err){
+    status.innerHTML = `<span class="success">done</span>`;
 
-    console.error(err);
-
-    status.innerHTML = `
-      <span class="error">
-        ${esc(err.message || 'Unknown error')}
-      </span>
-    `;
-
-  }finally{
-
-    btn.disabled = false;
-  }
-}
-
-async function initApiKey(){
-
-  const existing = getApiKey();
-
-  if(existing){
-
-    $('api-key').value = existing;
-
-    $('api-status').innerHTML = `
-      <span class="success">
-        API key loaded
-      </span>
-    `;
+  }catch(e){
+    console.error(e);
+    status.innerHTML = `<span class="error">${esc(e.message)}</span>`;
   }
 
-  $('save-key').addEventListener('click',async()=>{
-
-    const key =
-      $('api-key').value.trim();
-
-    if(!key){
-
-      localStorage.removeItem(
-        STORAGE.API_KEY
-      );
-
-      $('api-status').textContent =
-        'API key cleared';
-
-      return;
-    }
-
-    $('api-status').textContent =
-      'Validating...';
-
-    const valid =
-      await validateApiKey(key);
-
-    if(!valid){
-
-      $('api-status').innerHTML = `
-        <span class="error">
-          Invalid API key
-        </span>
-      `;
-
-      return;
-    }
-
-    localStorage.setItem(
-      STORAGE.API_KEY,
-      key
-    );
-
-    $('api-status').innerHTML = `
-      <span class="success">
-        API key saved
-      </span>
-    `;
-  });
+  btn.disabled = false;
 }
-
-$('generate')
-  .addEventListener('click',generateStocks);
-
-renderWatchlist();
-renderHistory();
-initApiKey();
 
 </script>
-
 </body>
 </html>
