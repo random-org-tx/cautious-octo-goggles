@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>AI Stock Research (Offline)</title>
+<title>Stock Research (Offline + Auto Dataset)</title>
 
 <style>
 *{box-sizing:border-box}
@@ -39,7 +39,7 @@ body{
 }
 
 .control label{font-size:12px;color:#666}
-.control select,.control input{
+.control select{
   width:100%;
   padding:10px;
   border-radius:8px;
@@ -55,6 +55,8 @@ button{
 }
 
 .primary{background:#111;color:#fff}
+
+.status{font-size:13px;color:#666;margin-left:10px}
 
 .grid{
   display:grid;
@@ -78,7 +80,7 @@ button{
   background:#f2f2f0;
   border-radius:999px;
   font-size:11px;
-  margin-right:5px;
+  margin-top:6px;
 }
 
 .metric{
@@ -92,9 +94,8 @@ button{
   margin-top:10px;
   font-size:13px;
   line-height:1.5;
+  color:#444;
 }
-
-.status{font-size:13px;color:#666;margin-left:10px}
 </style>
 </head>
 
@@ -103,8 +104,8 @@ button{
 <div class="container">
 
   <div class="header">
-    <h1>Stock Research (Offline Mode)</h1>
-    <p>No APIs • No keys • Fully deterministic local analysis</p>
+    <h1>Stock Research (Auto-Updating)</h1>
+    <p>GitHub Actions dataset + offline scoring engine</p>
   </div>
 
   <div class="panel">
@@ -117,7 +118,6 @@ button{
           <option value="balanced">Balanced</option>
           <option value="value">Value</option>
           <option value="growth">Growth</option>
-          <option value="dividend">Dividend</option>
         </select>
       </div>
 
@@ -148,21 +148,30 @@ button{
 <script>
 
 /* -----------------------------
-   1. STATIC DATASET (NO API)
+   1. LIVE DATA LOADER
 ------------------------------*/
 
-const STOCKS = [
-  {ticker:"AAPL", company:"Apple", sector:"Tech", price:180, pe:28, mcap:2800},
-  {ticker:"MSFT", company:"Microsoft", sector:"Tech", price:420, pe:32, mcap:3100},
-  {ticker:"GOOGL", company:"Alphabet", sector:"Tech", price:140, pe:25, mcap:1700},
-  {ticker:"AMZN", company:"Amazon", sector:"Consumer", price:170, pe:60, mcap:1800},
-  {ticker:"NVDA", company:"NVIDIA", sector:"AI", price:900, pe:70, mcap:2200},
-  {ticker:"META", company:"Meta", sector:"Social", price:480, pe:22, mcap:1200},
-  {ticker:"TSLA", company:"Tesla", sector:"Auto", price:220, pe:45, mcap:700}
-];
+let STOCKS = [];
+
+async function loadData() {
+  try {
+    const res = await fetch("./data/stocks.json?v=" + Date.now());
+
+    if (!res.ok) {
+      throw new Error("Dataset not found. Run GitHub Action first.");
+    }
+
+    STOCKS = await res.json();
+
+  } catch (e) {
+    document.getElementById("status").textContent =
+      "Failed to load dataset";
+    console.error(e);
+  }
+}
 
 /* -----------------------------
-   2. SCORING ENGINE (LOCAL AI)
+   2. LOCAL SCORING ENGINE
 ------------------------------*/
 
 function score(stock, prefs){
@@ -171,27 +180,26 @@ function score(stock, prefs){
   const pe = stock.pe || 1000;
 
   if(prefs.style === "value"){
-    s += (1/pe)*100;
+    s += (1 / pe) * 100;
   }
 
   if(prefs.style === "growth"){
-    s += stock.mcap > 2000 ? 30 : 10;
-  }
-
-  if(prefs.risk === "conservative"){
-    s += stock.mcap > 2000 ? 20 : 5;
+    s += (stock.mcap || 1) / 100;
   }
 
   if(prefs.style === "balanced"){
-    s += 10 / pe;
-    s += stock.mcap / 1000;
+    s += (1 / pe) * 50 + (stock.mcap || 1) / 200;
+  }
+
+  if(prefs.risk === "conservative"){
+    s += (stock.mcap || 1) > 2000 ? 20 : 5;
   }
 
   return s;
 }
 
 /* -----------------------------
-   3. RANKING ENGINE
+   3. RANKING
 ------------------------------*/
 
 function rankStocks(prefs){
@@ -213,24 +221,30 @@ function render(stocks){
 
   document.getElementById("results").innerHTML = `
     <div class="panel">
-      <h2>Top 10 Picks (Local Model)</h2>
+      <h2>Top 10 Picks</h2>
 
       <div class="grid">
         ${stocks.map(s=>`
           <div class="card">
             <div class="ticker">${s.ticker}</div>
-            <div class="company">${s.company}</div>
+            <div class="company">${s.company || ""}</div>
 
-            <div style="margin-top:8px;">
-              <span class="badge">${s.sector}</span>
+            <div class="badge">${s.sector || "Unknown"}</div>
+
+            <div class="metric">
+              <span>Price</span><span>${s.price || "N/A"}</span>
             </div>
 
-            <div class="metric"><span>Price</span><span>$${s.price}</span></div>
-            <div class="metric"><span>P/E</span><span>${s.pe}</span></div>
-            <div class="metric"><span>Market Cap</span><span>${s.mcap}B</span></div>
+            <div class="metric">
+              <span>P/E</span><span>${s.pe || "N/A"}</span>
+            </div>
+
+            <div class="metric">
+              <span>Market Cap</span><span>${s.mcap || "N/A"}</span>
+            </div>
 
             <div class="rationale">
-              Score: ${s.score.toFixed(2)} — ranked by local deterministic model.
+              Score: ${s.score.toFixed(2)} — ranked using local deterministic model.
             </div>
           </div>
         `).join("")}
@@ -243,7 +257,18 @@ function render(stocks){
    5. MAIN ENTRY
 ------------------------------*/
 
-function generateStocks(){
+async function generateStocks(){
+
+  document.getElementById("status").textContent =
+    "Loading dataset...";
+
+  await loadData();
+
+  if(!STOCKS.length){
+    document.getElementById("status").textContent =
+      "No dataset available";
+    return;
+  }
 
   const prefs = {
     style: document.getElementById("style").value,
@@ -255,7 +280,7 @@ function generateStocks(){
   render(ranked);
 
   document.getElementById("status").textContent =
-    "Generated locally (no API calls)";
+    "Loaded from GitHub Actions dataset";
 }
 
 </script>
