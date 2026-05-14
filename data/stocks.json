@@ -3,42 +3,70 @@
     "ticker": "AAPL",
     "company": "Apple Inc",
     "sector": "Technology",
-    "basePrice": 180
+    "price": 298.87,
+    "high": 300.92,
+    "low": 293.5,
+    "volume": 52684260,
+    "updatedAt": "2026-05-14T03:16:29.809Z"
   },
   {
     "ticker": "MSFT",
     "company": "Microsoft",
     "sector": "Technology",
-    "basePrice": 420
+    "price": 405.21,
+    "high": 406.31,
+    "low": 401.03,
+    "volume": 29667073,
+    "updatedAt": "2026-05-14T03:16:30.615Z"
   },
   {
     "ticker": "GOOGL",
     "company": "Alphabet",
     "sector": "Technology",
-    "basePrice": 140
+    "price": 402.62,
+    "high": 403.7,
+    "low": 385,
+    "volume": 28144555,
+    "updatedAt": "2026-05-14T03:16:30.780Z"
   },
   {
     "ticker": "AMZN",
     "company": "Amazon",
     "sector": "Consumer",
-    "basePrice": 170
+    "price": 270.13,
+    "high": 270.72,
+    "low": 263.2,
+    "volume": 39670915,
+    "updatedAt": "2026-05-14T03:16:30.938Z"
   },
   {
     "ticker": "NVDA",
     "company": "NVIDIA",
     "sector": "AI",
-    "basePrice": 900
+    "price": 225.83,
+    "high": 227.84,
+    "low": 221.5653,
+    "volume": 150405386,
+    "updatedAt": "2026-05-14T03:16:31.104Z"
   },
   {
     "ticker": "META",
     "company": "Meta",
     "sector": "Social",
-    "basePrice": 480
+    "price": 616.63,
+    "high": 619.9,
+    "low": 596.6601,
+    "volume": 14634394,
+    "updatedAt": "2026-05-14T03:16:31.262Z"
   },
   {
     "ticker": "TSLA",
     "company": "Tesla",
     "sector": "Auto",
-    "basePrice": 220
+    "price": 445.27,
+    "high": 453.4,
+    "low": 430.21,
+    "volume": 68283229,
+    "updatedAt": "2026-05-14T03:16:31.426Z"
   }
 ]
