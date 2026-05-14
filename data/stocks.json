@@ -3,70 +3,70 @@
     "ticker": "AAPL",
     "company": "Apple Inc",
     "sector": "Technology",
-    "price": 298.87,
-    "high": 300.92,
-    "low": 293.5,
-    "volume": 52684260,
-    "updatedAt": "2026-05-14T08:30:29.288Z"
+    "price": 297.4702,
+    "high": 300.45,
+    "low": 297.16,
+    "volume": 1859480,
+    "updatedAt": "2026-05-14T13:53:57.927Z"
   },
   {
     "ticker": "MSFT",
     "company": "Microsoft",
     "sector": "Technology",
-    "price": 405.21,
-    "high": 406.31,
-    "low": 401.03,
-    "volume": 29667073,
-    "updatedAt": "2026-05-14T08:30:29.671Z"
+    "price": 402.36,
+    "high": 405.57,
+    "low": 402.05,
+    "volume": 1220957,
+    "updatedAt": "2026-05-14T13:53:58.510Z"
   },
   {
     "ticker": "GOOGL",
     "company": "Alphabet",
     "sector": "Technology",
-    "price": 402.62,
-    "high": 403.7,
-    "low": 385,
-    "volume": 28144555,
-    "updatedAt": "2026-05-14T08:30:29.769Z"
+    "price": 400.02,
+    "high": 400.19,
+    "low": 396.335,
+    "volume": 1356496,
+    "updatedAt": "2026-05-14T13:53:58.641Z"
   },
   {
     "ticker": "AMZN",
     "company": "Amazon",
     "sector": "Consumer",
-    "price": 270.13,
-    "high": 270.72,
-    "low": 263.2,
-    "volume": 39670915,
-    "updatedAt": "2026-05-14T08:30:29.867Z"
+    "price": 269.98,
+    "high": 270.225,
+    "low": 268.37,
+    "volume": 1192935,
+    "updatedAt": "2026-05-14T13:53:58.771Z"
   },
   {
     "ticker": "NVDA",
     "company": "NVIDIA",
     "sector": "AI",
-    "price": 225.83,
-    "high": 227.84,
-    "low": 221.5653,
-    "volume": 150405386,
-    "updatedAt": "2026-05-14T08:30:29.965Z"
+    "price": 230.9682,
+    "high": 232.19,
+    "low": 229.3,
+    "volume": 10938655,
+    "updatedAt": "2026-05-14T13:53:58.900Z"
   },
   {
     "ticker": "META",
     "company": "Meta",
     "sector": "Social",
-    "price": 616.63,
-    "high": 619.9,
-    "low": 596.6601,
-    "volume": 14634394,
-    "updatedAt": "2026-05-14T08:30:30.063Z"
+    "price": 617.63,
+    "high": 618.84,
+    "low": 615.29,
+    "volume": 399511,
+    "updatedAt": "2026-05-14T13:53:59.030Z"
   },
   {
     "ticker": "TSLA",
     "company": "Tesla",
     "sector": "Auto",
-    "price": 445.27,
-    "high": 453.4,
-    "low": 430.21,
-    "volume": 68283229,
-    "updatedAt": "2026-05-14T08:30:30.161Z"
+    "price": 446.3,
+    "high": 447,
+    "low": 443.05,
+    "volume": 2385679,
+    "updatedAt": "2026-05-14T13:53:59.160Z"
   }
 ]
