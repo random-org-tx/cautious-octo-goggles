@@ -3,7 +3,7 @@ name: Update Stock Dataset
 on:
   schedule:
     - cron: "0 */6 * * *"   # every 6 hours
-  workflow_dispatch:        # manual trigger
+  workflow_dispatch:
 
 jobs:
   update:
@@ -29,5 +29,5 @@ jobs:
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add data/stocks.json
-          git commit -m "Auto-update stock dataset" || exit 0
+          git commit -m "chore: update stock dataset" || echo "No changes"
           git push
