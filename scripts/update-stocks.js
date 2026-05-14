@@ -1,6 +1,9 @@
 import fs from "fs";
 
-const SYMBOLS = [
+const BASE_URL =
+  "https://stooq.com/q/l/?s=";
+
+const symbols = [
   "aapl.us",
   "msft.us",
   "googl.us",
@@ -10,45 +13,70 @@ const SYMBOLS = [
   "tsla.us"
 ];
 
-// Stooq API (no key required)
-async function fetchStock(symbol) {
-  const url = `https://stooq.com/q/l/?s=${symbol}&f=sd2t2ohlcv&h&e=json`;
+// ---------- SAFE FETCH ----------
+async function fetchPrice(symbol) {
+  try {
+    const res = await fetch(
+      `${BASE_URL}${symbol}&f=sd2t2ohlcv&h&e=json`
+    );
 
-  const res = await fetch(url);
-  const json = await res.json();
+    const json = await res.json();
+    const d = json?.symbols?.[0];
 
-  const d = json?.symbols?.[0];
+    if (!d) return null;
 
-  if (!d) return null;
+    return {
+      price: Number(d.close) || null,
+      high: Number(d.high) || null,
+      low: Number(d.low) || null,
+      volume: Number(d.volume) || null,
+      updatedAt: new Date().toISOString()
+    };
 
-  return {
-    ticker: symbol.replace(".us","").toUpperCase(),
-    price: Number(d.close),
-    high: Number(d.high),
-    low: Number(d.low),
-    volume: Number(d.volume),
-    updatedAt: new Date().toISOString()
-  };
+  } catch (e) {
+    return null;
+  }
 }
 
+// ---------- MAIN PIPELINE ----------
 async function run() {
-  const results = [];
 
-  for (const s of SYMBOLS) {
-    try {
-      const data = await fetchStock(s);
-      if (data) results.push(data);
-    } catch (e) {
-      console.error("Failed:", s);
-    }
-  }
-
-  fs.writeFileSync(
-    "./data/stocks.json",
-    JSON.stringify(results, null, 2)
+  // 1. Load bootstrap dataset (CRITICAL)
+  const base = JSON.parse(
+    fs.readFileSync("./data/stocks.json", "utf-8")
   );
 
-  console.log("Dataset updated:", results.length);
+  const updated = [];
+
+  for (let i = 0; i < base.length; i++) {
+
+    const stock = base[i];
+    const symbol = symbols[i];
+
+    const live = await fetchPrice(symbol);
+
+    updated.push({
+      ticker: stock.ticker,
+      company: stock.company,
+      sector: stock.sector,
+
+      // fallback-safe enrichment
+      price: live?.price ?? stock.basePrice,
+      high: live?.high ?? null,
+      low: live?.low ?? null,
+      volume: live?.volume ?? null,
+
+      updatedAt: live?.updatedAt ?? new Date().toISOString()
+    });
+  }
+
+  // 2. Write back dataset
+  fs.writeFileSync(
+    "./data/stocks.json",
+    JSON.stringify(updated, null, 2)
+  );
+
+  console.log("Dataset updated:", updated.length);
 }
 
 run();
