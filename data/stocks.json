@@ -5,68 +5,68 @@
     "sector": "Technology",
     "price": 298.97,
     "high": 300.51,
-    "low": 296.36,
-    "volume": 42181822,
-    "updatedAt": "2026-05-20T02:40:15.705Z"
+    "low": 296.35,
+    "volume": 42243561,
+    "updatedAt": "2026-05-20T08:57:30.627Z"
   },
   {
     "ticker": "MSFT",
     "company": "Microsoft",
     "sector": "Technology",
-    "price": 417.6,
+    "price": 417.42,
     "high": 432.7,
     "low": 416.49,
-    "volume": 32932195,
-    "updatedAt": "2026-05-20T02:40:16.092Z"
+    "volume": 33018678,
+    "updatedAt": "2026-05-20T08:57:31.659Z"
   },
   {
     "ticker": "GOOGL",
     "company": "Alphabet",
     "sector": "Technology",
-    "price": 387.7,
+    "price": 387.66,
     "high": 397.15,
     "low": 386.11,
-    "volume": 39451389,
-    "updatedAt": "2026-05-20T02:40:16.192Z"
+    "volume": 39545672,
+    "updatedAt": "2026-05-20T08:57:31.832Z"
   },
   {
     "ticker": "AMZN",
     "company": "Amazon",
     "sector": "Consumer",
-    "price": 259.38,
+    "price": 259.34,
     "high": 262.25,
-    "low": 255.192,
-    "volume": 40257770,
-    "updatedAt": "2026-05-20T02:40:16.292Z"
+    "low": 255.19,
+    "volume": 40340698,
+    "updatedAt": "2026-05-20T08:57:32.017Z"
   },
   {
     "ticker": "NVDA",
     "company": "NVIDIA",
     "sector": "AI",
-    "price": 220.63,
+    "price": 220.61,
     "high": 224.48,
     "low": 217.91,
-    "volume": 140100938,
-    "updatedAt": "2026-05-20T02:40:16.391Z"
+    "volume": 140948207,
+    "updatedAt": "2026-05-20T08:57:32.188Z"
   },
   {
     "ticker": "META",
     "company": "Meta",
     "sector": "Social",
-    "price": 602.75,
+    "price": 602.61,
     "high": 613.93,
     "low": 600.55,
-    "volume": 11719092,
-    "updatedAt": "2026-05-20T02:40:16.489Z"
+    "volume": 11749947,
+    "updatedAt": "2026-05-20T08:57:32.372Z"
   },
   {
     "ticker": "TSLA",
     "company": "Tesla",
     "sector": "Auto",
-    "price": 404.15,
+    "price": 404.11,
     "high": 405.63,
     "low": 393.63,
-    "volume": 46333585,
-    "updatedAt": "2026-05-20T02:40:16.588Z"
+    "volume": 46500552,
+    "updatedAt": "2026-05-20T08:57:32.543Z"
   }
 ]
