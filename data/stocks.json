@@ -6,67 +6,67 @@
     "price": 302.25,
     "high": 302.8,
     "low": 298.08,
-    "volume": 38160115,
-    "updatedAt": "2026-05-21T02:42:26.516Z"
+    "volume": 38229843,
+    "updatedAt": "2026-05-21T09:27:03.002Z"
   },
   {
     "ticker": "MSFT",
     "company": "Microsoft",
     "sector": "Technology",
-    "price": 421.1,
+    "price": 421.06,
     "high": 422.1,
     "low": 411.3001,
-    "volume": 27790157,
-    "updatedAt": "2026-05-21T02:42:27.011Z"
+    "volume": 27864016,
+    "updatedAt": "2026-05-21T09:27:03.447Z"
   },
   {
     "ticker": "GOOGL",
     "company": "Alphabet",
     "sector": "Technology",
-    "price": 388.88,
+    "price": 388.91,
     "high": 393.8599,
     "low": 382.9,
-    "volume": 31678595,
-    "updatedAt": "2026-05-21T02:42:27.112Z"
+    "volume": 31744404,
+    "updatedAt": "2026-05-21T09:27:03.550Z"
   },
   {
     "ticker": "AMZN",
     "company": "Amazon",
     "sector": "Consumer",
     "price": 265.01,
-    "high": 265.56,
+    "high": 265.58,
     "low": 259.533,
-    "volume": 34836385,
-    "updatedAt": "2026-05-21T02:42:27.213Z"
+    "volume": 34933152,
+    "updatedAt": "2026-05-21T09:27:03.652Z"
   },
   {
     "ticker": "NVDA",
     "company": "NVIDIA",
     "sector": "AI",
-    "price": 223.33,
+    "price": 223.47,
     "high": 226.13,
     "low": 220.495,
-    "volume": 179154790,
-    "updatedAt": "2026-05-21T02:42:27.317Z"
+    "volume": 184201587,
+    "updatedAt": "2026-05-21T09:27:03.756Z"
   },
   {
     "ticker": "META",
     "company": "Meta",
     "sector": "Social",
-    "price": 604.87,
+    "price": 605.06,
     "high": 608,
-    "low": 597.82,
-    "volume": 11297147,
-    "updatedAt": "2026-05-21T02:42:27.417Z"
+    "low": 597.81,
+    "volume": 11329709,
+    "updatedAt": "2026-05-21T09:27:03.858Z"
   },
   {
     "ticker": "TSLA",
     "company": "Tesla",
     "sector": "Auto",
-    "price": 417.256,
+    "price": 417.26,
     "high": 417.46,
     "low": 406.39,
-    "volume": 45037415,
-    "updatedAt": "2026-05-21T02:42:27.519Z"
+    "volume": 45294745,
+    "updatedAt": "2026-05-21T09:27:03.960Z"
   }
 ]
