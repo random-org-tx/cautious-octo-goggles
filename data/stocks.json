@@ -3,21 +3,21 @@
     "ticker": "AAPL",
     "company": "Apple Inc",
     "sector": "Technology",
-    "price": 305.1,
+    "price": 304.99,
     "high": 305.54,
     "low": 300.4,
-    "volume": 42892335,
-    "updatedAt": "2026-05-22T02:43:33.801Z"
+    "volume": 42965126,
+    "updatedAt": "2026-05-22T08:52:51.335Z"
   },
   {
     "ticker": "MSFT",
     "company": "Microsoft",
     "sector": "Technology",
-    "price": 419.1,
+    "price": 419.09,
     "high": 426.34,
     "low": 415.71,
-    "volume": 31292958,
-    "updatedAt": "2026-05-22T02:43:34.378Z"
+    "volume": 31393469,
+    "updatedAt": "2026-05-22T08:52:51.788Z"
   },
   {
     "ticker": "GOOGL",
@@ -26,18 +26,18 @@
     "price": 387.66,
     "high": 392.5,
     "low": 383.02,
-    "volume": 24802492,
-    "updatedAt": "2026-05-22T02:43:34.497Z"
+    "volume": 24852843,
+    "updatedAt": "2026-05-22T08:52:51.894Z"
   },
   {
     "ticker": "AMZN",
     "company": "Amazon",
     "sector": "Consumer",
-    "price": 268.45,
+    "price": 268.46,
     "high": 269.4899,
     "low": 261.37,
-    "volume": 36501296,
-    "updatedAt": "2026-05-22T02:43:34.620Z"
+    "volume": 36591743,
+    "updatedAt": "2026-05-22T08:52:51.997Z"
   },
   {
     "ticker": "NVDA",
@@ -46,8 +46,8 @@
     "price": 219.51,
     "high": 227.3999,
     "low": 217.93,
-    "volume": 202459463,
-    "updatedAt": "2026-05-22T02:43:34.741Z"
+    "volume": 203381760,
+    "updatedAt": "2026-05-22T08:52:52.101Z"
   },
   {
     "ticker": "META",
@@ -56,17 +56,17 @@
     "price": 607.38,
     "high": 609.6,
     "low": 594.8083,
-    "volume": 13448490,
-    "updatedAt": "2026-05-22T02:43:34.864Z"
+    "volume": 13476078,
+    "updatedAt": "2026-05-22T08:52:52.205Z"
   },
   {
     "ticker": "TSLA",
     "company": "Tesla",
     "sector": "Auto",
-    "price": 417.76,
+    "price": 417.85,
     "high": 426.95,
     "low": 412.9,
-    "volume": 42476749,
-    "updatedAt": "2026-05-22T02:43:34.985Z"
+    "volume": 42636854,
+    "updatedAt": "2026-05-22T08:52:52.307Z"
   }
 ]
