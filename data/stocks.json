@@ -3,70 +3,70 @@
     "ticker": "AAPL",
     "company": "Apple Inc",
     "sector": "Technology",
-    "price": 305.265,
-    "high": 305.35,
+    "price": 305.1,
+    "high": 305.54,
     "low": 300.4,
-    "volume": 17452248,
-    "updatedAt": "2026-05-21T19:46:03.708Z"
+    "volume": 42892335,
+    "updatedAt": "2026-05-22T02:43:33.801Z"
   },
   {
     "ticker": "MSFT",
     "company": "Microsoft",
     "sector": "Technology",
-    "price": 418.815,
+    "price": 419.1,
     "high": 426.34,
     "low": 415.71,
-    "volume": 13485104,
-    "updatedAt": "2026-05-21T19:46:04.258Z"
+    "volume": 31292958,
+    "updatedAt": "2026-05-22T02:43:34.378Z"
   },
   {
     "ticker": "GOOGL",
     "company": "Alphabet",
     "sector": "Technology",
-    "price": 388.99,
+    "price": 387.66,
     "high": 392.5,
     "low": 383.02,
-    "volume": 10327797,
-    "updatedAt": "2026-05-21T19:46:04.361Z"
+    "volume": 24802492,
+    "updatedAt": "2026-05-22T02:43:34.497Z"
   },
   {
     "ticker": "AMZN",
     "company": "Amazon",
     "sector": "Consumer",
-    "price": 268.2595,
+    "price": 268.45,
     "high": 269.4899,
     "low": 261.37,
-    "volume": 19465309,
-    "updatedAt": "2026-05-21T19:46:04.464Z"
+    "volume": 36501296,
+    "updatedAt": "2026-05-22T02:43:34.620Z"
   },
   {
     "ticker": "NVDA",
     "company": "NVIDIA",
     "sector": "AI",
-    "price": 220.24,
+    "price": 219.51,
     "high": 227.3999,
     "low": 217.93,
-    "volume": 120229388,
-    "updatedAt": "2026-05-21T19:46:04.565Z"
+    "volume": 202459463,
+    "updatedAt": "2026-05-22T02:43:34.741Z"
   },
   {
     "ticker": "META",
     "company": "Meta",
     "sector": "Social",
-    "price": 606.7669,
+    "price": 607.38,
     "high": 609.6,
     "low": 594.8083,
-    "volume": 6962012,
-    "updatedAt": "2026-05-21T19:46:04.667Z"
+    "volume": 13448490,
+    "updatedAt": "2026-05-22T02:43:34.864Z"
   },
   {
     "ticker": "TSLA",
     "company": "Tesla",
     "sector": "Auto",
-    "price": 418.74,
+    "price": 417.76,
     "high": 426.95,
     "low": 412.9,
-    "volume": 29116264,
-    "updatedAt": "2026-05-21T19:46:04.768Z"
+    "volume": 42476749,
+    "updatedAt": "2026-05-22T02:43:34.985Z"
   }
 ]
