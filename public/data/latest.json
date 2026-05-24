@@ -1,0 +1,18 @@
+{
+  "generatedAt": "2026-05-24T18:57:08.185684+00:00",
+  "status": "configuration_required",
+  "source": "Alpaca free IEX feed",
+  "universeCount": 0,
+  "macro": {
+    "summary": "APCA_API_KEY_ID and APCA_API_SECRET_KEY are not configured. Add free Alpaca keys in repository Actions secrets.",
+    "riskLevel": "unknown"
+  },
+  "methodology": [
+    "Price momentum across 5, 20, and 60 trading days",
+    "Volume and dollar-liquidity trend",
+    "Volatility-adjusted return",
+    "Relative strength versus SPY",
+    "Optional macro context from FRED when FRED_API_KEY is configured"
+  ],
+  "recommendations": []
+}
